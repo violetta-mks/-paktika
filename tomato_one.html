@@ -9,6 +9,8 @@
     <title>Tomato one</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js" defer></script>
+    <script src="js/main.js" defer></script>
 </head>
 <body>
 <header>
@@ -42,75 +44,77 @@
 </header>
 
 <main>
-    <section class="product-header">
-        <div class="header-content">
-            <div class="header-left">
-                <div class="back-nav"><img src="img/Arrow.png" class="back-button"/>
-                    <a href="tomato.html" class="back-link">Return to all tomatoes</a>
+    <div id="kiwi">
+        <div class="product-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="back-nav"><img src="img/Arrow.png" class="back-button"/>
+                        <a href="tomato.html" class="back-link">Return to all tomatoes</a>
+                    </div>
+                    <h1 class="product-name">{{product.title}} <br/>
+                    </h1>
+                    <p class="text-content2">×××××</p>
+                    <div class="product-features">
+                        <h2 style="display: flex; align-items: center; gap: 8px;">
+                            <img src="img/mark.png"> Very high yield and <br>excellent fruit quality!
+                        </h2>
+                    </div>
+                    <div class="section-title">CHARACTERISTICS</div>
+                    <div class="divider"></div>
+                    <div class="disease-resistance">
+                        <b>Resistance</b><br/>
+                        HR: ToMV:0-2; Fol: 1,2; Ve/Vd;<br/>
+                        IR: TYLCV<br/></div>
                 </div>
-                <h1 class="product-name">TAG 1002 (TAG 809) <br/>
-                    <span style="color: #57984C;">Tomato Determinate</span><br/>
-                    <span style="color: #57984C;">Red Standard Round</span>
-                </h1>
-                <p class="text-content2">×××××</p>
-                <div class="product-features">
-                    <h2 style="display: flex; align-items: center; gap: 8px;">
-                        <img src="img/mark.png"> Very high yield and <br>excellent fruit quality!
-                    </h2>
-                </div>
-                <div class="section-title">CHARACTERISTICS</div>
-                <div class="divider"></div>
-                <div class="disease-resistance">
-                    <b>Resistance</b><br/>
-                    HR: ToMV:0-2; Fol: 1,2; Ve/Vd;<br/>
-                    IR: TYLCV<br/></div>
-            </div>
-            <div class="header-right">
-                <img src="img/image2.png" class="product-image"/>
-                <div class="download-container">
-                    <button class="download-button">
-                        <img src="img/Ico_pdf.png" class="download-icon-image"/>
-                        <div style="font-weight: bold; color: #57984C;">Download PDF</div>
-                    </button>
+                <div class="header-right">
+                    <img :src="product.image" class="product-image"/>
+                    <div class="download-container">
+                        <button class="download-button">
+                            <img src="img/Ico_pdf.png" class="download-icon-image"/>
+                            <div style="font-weight: bold; color: #57984C;">Download PDF</div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section class="product-info">
-        <div class="info-content">
-            <div class="info-left">
-                <div style="margin-bottom: 30px;">
-                    <h2 class="section-title">Plant</h2>
-                    <div class="divider"></div>
-                    <div class="product-description">Strong vigor that provides good leaf coverage.<br/>
-                        Very high productivity with good fruit setting.<br/>
-                        Early matured variety.
+        <div class="product-info">
+            <div class="info-content">
+                <div class="info-left">
+                    <div style="margin-bottom: 30px;">
+                        <h2 class="section-title">Plant</h2>
+                        <div class="divider"></div>
+                        <div class="product-description" v-for="value in product.desc.plant">
+                            <span>{{value}}</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <h2 class="section-title">Fruit</h2>
+                        <div class="divider"></div>
+                        <div class="product-description" v-for="value in product.desc.fruit">
+                            <span>{{value}}</span>
+                        </div>
                     </div>
                 </div>
-                <div style="margin-bottom: 30px;">
-                    <h2 class="section-title">Fruit</h2>
-                    <div class="divider"></div>
-                    <div class="product-description">Long shelf life on plant and post harvest.<br/>
-                        Nice shiny attractive deep red color.<br/>
-                        Average fruit size: 140 – 160 grams.
+                <div class="info-right">
+                    <div style="margin-bottom: 30px;">
+                        <h2 class="section-title">Cycle</h2>
+                        <div class="divider"></div>
+                        <div class="product-description" v-for="value in product.desc.cycle">
+                            <span>{{value}}</span>
+                        </div>
+                        <div style="margin-bottom: 30px;">
+                            <h2 class="section-title">Color</h2>
+                            <div class="divider"></div>
+                            <div class="product-description">
+                                <span>{{product.desc.color}}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="info-right">
-                <div style="margin-bottom: 30px;">
-                    <h2 class="section-title">Cycle</h2>
-                    <div class="divider"></div>
-                    <div class="product-description">Spring<br/>Fall<br/>Winter</div>
-                </div>
-                <div style="margin-bottom: 30px;">
-                    <h2 class="section-title">Color</h2>
-                    <div class="divider"></div>
-                    <div class="product-description">Red</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </main>
 
 <footer class="footer">
