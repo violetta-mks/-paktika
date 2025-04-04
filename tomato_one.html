@@ -68,11 +68,15 @@
                 </div>
                 <div class="header-right">
                     <img :src="product.image" class="product-image"/>
-                    <div class="download-container">
-                        <button class="download-button">
-                            <img src="img/Ico_pdf.png" class="download-icon-image"/>
-                            <div style="font-weight: bold; color: #57984C;">Download PDF</div>
-                        </button>
+                    <div class="btn-pdf-tomato">
+                        <a class="pdf-download-button" href="#" @click.prevent="addToCart(product.id)" v-if="!btnVisible">
+                            <span class="pdf-icon"></span>
+                            Add to basket
+                        </a>
+                        <a class="pdf-download-button" href="contact_us.html" v-if="btnVisible">
+                            <span class="pdf-icon"></span>
+                            Go to basket
+                        </a>
                     </div>
                 </div>
             </div>

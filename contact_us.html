@@ -8,6 +8,8 @@
     <title>Contact us</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js" defer></script>
+    <script src="js/main.js" defer></script>
 </head>
 <body>
 <header>
@@ -40,113 +42,137 @@
     </div>
 </header>
 <main>
-<div>
-    <img src="img/bg3.png" style="margin-top: 12px;"/>
-</div>
-<div class="wrap">
-    <h1 class="text-content1">Contact us</h1>
-    <p class="text-content2">×××××</p>
-</div>
-<div>
-    <form class="contact-page-form">
-        <div class="form-layout">
-            <div class="form-block">
-                <div class="input-wrapper">
-                    <label>Name *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>Company Name *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>Position *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>City *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>Country *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>Telephone *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>Email *</label>
-                    <input type="email" required>
+    <div>
+        <img src="img/bg3.png" style="margin-top: 12px;"/>
+    </div>
+    <div class="wrap">
+        <h1 class="text-content1">Contact us</h1>
+        <p class="text-content2">×××××</p>
+        <div id="kiwi">
+            <div class="basket-wrapper" v-if="cartVisible">
+                <div class="basket-item" v-for="p in product">
+                    <div class="wrap-4"><img v-bind:src="p.image" alt="p.title"></div>
+                    <div class="wrap-4">{{ p.title }}</div>
+                    <div class="wrap-4">{{ p.short_text }}</div>
+                    <div class="wrap-4" @click.prevent="removeFromCart(p.id)">
+                        <button class="remove">×</button>
+                    </div>
                 </div>
             </div>
+            <div>
+                <form @submit.prevent="makeOrder" class="contact-page-form">
+                    <div class="form-layout">
+                        <div class="form-block">
+                            <div class="input-wrapper">
+                                <label>Name *</label>
+                                <input type="text" v-model="contactFields.name" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>Company Name *</label>
+                                <input type="text" v-model="contactFields.companyName" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>Position *</label>
+                                <input type="text" v-model="contactFields.position" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>City *</label>
+                                <input type="text" v-model="contactFields.city" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>Country *</label>
+                                <input type="text" v-model="contactFields.country" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>Telephone *</label>
+                                <input type="text" v-model="contactFields.telephone" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>Email *</label>
+                                <input type="email" v-model="contactFields.email" required>
+                            </div>
+                        </div>
 
-            <div class="contact-page-form">
-                <div class="input-wrapper">
-                    <label>You are a *</label>
-                    <select required>
-                        <option value="">Select...</option>
-                        <option value="gardener">Gardener</option>
-                        <option value="farmer">Farmer</option>
-                        <option value="landscape designer">Landscape Designer</option>
-                        <option value="retail buyer">Retail Buyer</option>
-                    </select>
-                </div>
-                <div class="input-wrapper">
-                    <label>If other, please specify *</label>
-                    <input type="text" required>
-                </div>
-                <div class="input-wrapper">
-                    <label>You are interested in *</label>
-                    <textarea cols="20" rows="7" required></textarea>
-                </div>
-                <div class="captcha-section">
-                    <label>Please type this code</label>
-                    <div class="captcha-box">
-                        <img src="img/captcha.png">
-                        <input type="text" class="captcha-input" required placeholder="Enter code">
+                        <div class="contact-page-form">
+                            <div class="input-wrapper">
+                                <label>You are a *</label>
+                                <select v-model="contactFields.youAre" required>
+                                    <option value="">Select...</option>
+                                    <option value="gardener">Gardener</option>
+                                    <option value="farmer">Farmer</option>
+                                    <option value="landscape designer">Landscape Designer</option>
+                                    <option value="retail buyer">Retail Buyer</option>
+                                </select>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>If other, please specify *</label>
+                                <input type="text" v-model="contactFields.otherSpecify" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label>You are interested in *</label>
+                                <textarea cols="20" rows="7" v-model="contactFields.interested" required></textarea>
+                            </div>
+                            <div class="captcha-section">
+                                <label>Please type this code</label>
+                                <div class="captcha-box">
+                                    <img src="img/captcha.png">
+                                    <input type="text" class="captcha-input" required placeholder="Enter code" style="border-radius: 7px" v-model="contactFields.capcha">
+                                </div>
+                                <input type="submit" value="Send Message" class="submit-button" :disabled="formSubmitted">
+                            </div>
+                        </div>
                     </div>
-                    <input type="submit" value="Send Message" class="submit-button">
+                </form>
+                <div v-if="!formVisible" class="form-info">
+                    <p>Name: {{ contactFields.name }}</p>
+                    <p>companyName: {{ contactFields.companyName }}</p>
+                    <p>Position: {{ contactFields.position }}</p>
+                    <p>City: {{ contactFields.city }}</p>
+                    <p>Country: {{ contactFields.country }}</p>
+                    <p>Telephone: {{ contactFields.telephone }}</p>
+                    <p>Email: {{ contactFields.email }}</p>
+                    <p>You are a: {{ contactFields.youAre }}</p>
+                    <p>Other specify: {{ contactFields.otherSpecify }}</p>
+                    <p>Interested in: {{ contactFields.interested }}</p>
                 </div>
             </div>
         </div>
-    </form>
-</div>
-<div class="contact-details">
-    <div class="address-block">
-        <span><b>Our Address</b></span>
-        <hr style="color: #57984C;">
-        <p class="address-text">AGRIDERA Seeds & Agriculture Ltd.</p>
-        <p class="address-text">P.O Box 103,</p>
-        <p class="address-text">Gedera 70750, Israel</p>
-        <p class="address-text">Telephone: <a href="tel:+97289449222">+972 8 944 9222</a></p>
     </div>
-</div>
+    <div class="contact-details">
+        <div class="address-block">
+            <span><b>Our Address</b></span>
+            <hr style="color: #57984C;">
+            <p class="address-text">AGRIDERA Seeds & Agriculture Ltd.</p>
+            <p class="address-text">P.O Box 103,</p>
+            <p class="address-text">Gedera 70750, Israel</p>
+            <p class="address-text">Telephone: <a href="tel:+97289449222">+972 8 944 9222</a></p>
+        </div>
+    </div>
 </main>
 <footer>
-<div class="footer">
-    <div class="footer_content">
-        <div id="links">
-            <ul>
-                <li><a href="">PROFILE</a></li>
-                <li><a href="">MANAGEMENT</a></li>
-                <li><a href="tomato.html">PRODUCTS</a></li>
-                <li><a href="">R&D</a></li>
-                <li><a href="">LINKS</a></li>
-                <li><a href="">SITEMAP</a></li>
-                <li><a href="contact_us.html">CONTACT</a></li>
-            </ul>
+    <div class="footer">
+        <div class="footer_content">
+            <div id="links">
+                <ul>
+                    <li><a href="">PROFILE</a></li>
+                    <li><a href="">MANAGEMENT</a></li>
+                    <li><a href="tomato.html">PRODUCTS</a></li>
+                    <li><a href="">R&D</a></li>
+                    <li><a href="">LINKS</a></li>
+                    <li><a href="">SITEMAP</a></li>
+                    <li><a href="contact_us.html">CONTACT</a></li>
+                </ul>
+            </div>
+            <div class="social">
+                <a href="https://linkedin.com"><img src="img/Ico_in.png" alt="in"></a>
+                <a href="https://www.instagram.com"><img src="img/Ico_inst.png" alt="inst"></a>
+                <a href="https://www.youtube.com"><img src="img/Ico_tube.png" alt="youtube"></a>
+                <a href="https://twitter.com"><img src="img/Ico_tw.png" alt="twitter"></a>
+                <a href="https://facebook.com"><img src="img/Ico_fb.png" alt="facebook"></a>
+            </div>
         </div>
-        <div class="social">
-            <a href="https://linkedin.com"><img src="img/Ico_in.png" alt="in"></a>
-            <a href="https://www.instagram.com"><img src="img/Ico_inst.png" alt="inst"></a>
-            <a href="https://www.youtube.com"><img src="img/Ico_tube.png" alt="youtube"></a>
-            <a href="https://twitter.com"><img src="img/Ico_tw.png" alt="twitter"></a>
-            <a href="https://facebook.com"><img src="img/Ico_fb.png" alt="facebook"></a>
-        </div>
+        <p>AGRIDERA SEEDS & AGRICULTURE LTD. © 2020</p>
     </div>
-    <p>AGRIDERA SEEDS & AGRICULTURE LTD. © 2020</p>
-</div>
 </footer>
 </body>
 </html>
